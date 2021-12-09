@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\Neil\\Documents\\Projects\\AdventOfCode\\src\\AdventOfCode.csproj": {}
+    "C:\\Users\\Neil\\Projects\\advent-of-code\\src\\AdventOfCode.csproj": {}
   },
   "projects": {
-    "D:\\Users\\Neil\\Documents\\Projects\\AdventOfCode\\src\\AdventOfCode.csproj": {
+    "C:\\Users\\Neil\\Projects\\advent-of-code\\src\\AdventOfCode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\Neil\\Documents\\Projects\\AdventOfCode\\src\\AdventOfCode.csproj",
+        "projectUniqueName": "C:\\Users\\Neil\\Projects\\advent-of-code\\src\\AdventOfCode.csproj",
         "projectName": "AdventOfCode",
-        "projectPath": "D:\\Users\\Neil\\Documents\\Projects\\AdventOfCode\\src\\AdventOfCode.csproj",
+        "projectPath": "C:\\Users\\Neil\\Projects\\advent-of-code\\src\\AdventOfCode.csproj",
         "packagesPath": "C:\\Users\\Neil\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\Neil\\Documents\\Projects\\AdventOfCode\\src\\obj\\",
+        "outputPath": "C:\\Users\\Neil\\Projects\\advent-of-code\\src\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\Neil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -25,7 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/WPCSoftwareLimited/_packaging/WPC%40Local/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {

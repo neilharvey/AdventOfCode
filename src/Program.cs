@@ -1,4 +1,4 @@
-﻿var path = Environment.GetCommandLineArgs().ElementAt(1);
+﻿var path = Environment.GetCommandLineArgs().ElementAtOrDefault(1);
 
 if(path == null)
 {
@@ -14,10 +14,10 @@ if(!fileInfo.Exists)
 }
 else
 {
+    var sw = System.Diagnostics.Stopwatch.StartNew();
     var stream = File.OpenRead(fileInfo.FullName);
     var reader = new StreamReader(stream);
-    var solver = new Y2021.Day1.Solver();
-    var increases = solver.Part2(reader);
-
-    Console.WriteLine(increases);
+    var solver = new Y2021.Day2.Solver();
+    var answer = solver.Part2(reader);
+    Console.WriteLine($"{answer} [{sw.ElapsedMilliseconds}ms]");
 }
