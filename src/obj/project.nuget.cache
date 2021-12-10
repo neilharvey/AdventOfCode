@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "J2wOMB5ZmpgFodqj7I4oAlOoqhivrUEcJX4ZTiC6LJBHLARCD4RIuHxJBCaMEtE8Q2KZcVM89LZ9k/CrGjYH9Q==",
+  "success": true,
+  "projectFilePath": "D:\\Users\\Neil\\Documents\\Projects\\AdventOfCode\\src\\AdventOfCode.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Neil\\.nuget\\packages\\commandlineparser\\2.8.0\\commandlineparser.2.8.0.nupkg.sha512"
+  ],
+  "logs": []
+}

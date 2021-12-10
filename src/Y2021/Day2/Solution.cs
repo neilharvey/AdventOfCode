@@ -1,25 +1,25 @@
-namespace Y2021.Day2;
+namespace AdventOfCode.Y2021.Day2;
 
-public class Solver
+public class Solution : IPuzzleSolution
 {
+    public DateOnly PuzzleDate => new(2021, 12, 2);
+
     public int Part1(StreamReader reader)
     {
         var horizontal = 0;
         var depth = 0;
-        var line = reader.ReadLine();
-        while(line != null)
+
+        while(reader.TryReadLine(out string line))
         {
             var separator = line.IndexOf(" ");
-            var command = line.Substring(0, separator);
-            var value = int.Parse(line.Substring(separator + 1));
+            var command = line[..separator];
+            var value = int.Parse(line[(separator + 1)..]);
             switch(command)
             {
                 case "forward" : horizontal += value; break;
                 case "down" : depth += value; break;
                 case "up" : depth -= value; break;
             }
-
-            line = reader.ReadLine();
         }
 
         return horizontal * depth;
@@ -30,12 +30,12 @@ public class Solver
         var horizontal = 0;
         var depth = 0;
         var aim = 0;
-        var line = reader.ReadLine();
-        while(line != null)
+
+        while(reader.TryReadLine(out string line))
         {
             var separator = line.IndexOf(" ");
-            var command = line.Substring(0, separator);
-            var value = int.Parse(line.Substring(separator + 1));
+            var command = line[..separator];
+            var value = int.Parse(line[(separator + 1)..]);
             switch(command)
             {
                 case "forward": 
@@ -49,8 +49,6 @@ public class Solver
                     aim -= value; 
                     break;
             }
-
-            line = reader.ReadLine();
         }
 
         return horizontal * depth;
