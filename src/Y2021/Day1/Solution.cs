@@ -2,8 +2,6 @@ namespace AdventOfCode.Y2021.Day1;
 
 public class Solution : IPuzzleSolution
 {
-    public DateOnly PuzzleDate => new(2021, 12, 1);
-
     public int Part1(StreamReader reader)
     {
         int? previousDepth = null;
@@ -13,7 +11,7 @@ public class Solution : IPuzzleSolution
         while (reader.TryReadLine(out string line))
         {
             currentDepth = int.Parse(line);
-            if(previousDepth.HasValue && currentDepth > previousDepth)
+            if (previousDepth.HasValue && currentDepth > previousDepth)
             {
                 increases++;
             }
@@ -27,7 +25,7 @@ public class Solution : IPuzzleSolution
     {
         var increases = 0;
         var window = new Queue<int>(3);
-        for(var i=0; i<3; i++)
+        for (var i = 0; i < 3; i++)
         {
             var depth = int.Parse(reader.ReadLine()!);
             window.Enqueue(depth);
