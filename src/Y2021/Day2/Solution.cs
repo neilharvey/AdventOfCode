@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2021.Day2;
 
 public class Solution : IPuzzleSolution
 {
-    public int Part1(StreamReader reader)
+    public long Part1(StreamReader reader)
     {
         var horizontal = 0;
         var depth = 0;
@@ -23,7 +23,7 @@ public class Solution : IPuzzleSolution
         return horizontal * depth;
     }
 
-    public int Part2(StreamReader reader)
+    public long Part2(StreamReader reader)
     {
         var horizontal = 0;
         var depth = 0;

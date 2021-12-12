@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCode.Y2021.Day3;
 public class Solution : IPuzzleSolution
 {
-    public int Part1(StreamReader reader)
+    public long Part1(StreamReader reader)
     {
         var trie = CreateTrie(reader);
 
@@ -30,7 +30,7 @@ public class Solution : IPuzzleSolution
         return gammaRate * epsilonRate;
     }
 
-    public int Part2(StreamReader reader)
+    public long Part2(StreamReader reader)
     {
         var trie = CreateTrie(reader);
         var oxygenGeneratorRating = FindPath(trie, (x, y) => x.Value <= y.Value ? x : y);

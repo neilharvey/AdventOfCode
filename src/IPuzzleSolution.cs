@@ -2,8 +2,8 @@
 {
     public interface IPuzzleSolution
     {
-        int Part1(StreamReader reader);
+        long Part1(StreamReader reader);
 
-        int Part2(StreamReader reader);
+        long Part2(StreamReader reader);
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace AdventOfCode.Y2021.Day4;
 public class Solution : IPuzzleSolution
 {
-    public int Part1(StreamReader reader)
+    public long Part1(StreamReader reader)
     {
-        var numbers = reader.ReadLine().ToListOfInt();
+        var numbers = reader.ReadLine().AsIntegers();
         var boards = GetBoards(reader);
 
         foreach (var number in numbers)
@@ -27,9 +27,9 @@ public class Solution : IPuzzleSolution
         return 0;
     }
 
-    public int Part2(StreamReader reader)
+    public long Part2(StreamReader reader)
     {
-        var numbers = reader.ReadLine().ToListOfInt();
+        var numbers = reader.ReadLine().AsIntegers();
         var boards = GetBoards(reader);
         var lastWinner = boards[0];
 
@@ -62,7 +62,7 @@ public class Solution : IPuzzleSolution
 
             for (var row = 0; row < Board.Size; row++)
             {
-                var rowNumbers = reader.ReadLine().ToListOfInt(" ");
+                var rowNumbers = reader.ReadLine().AsIntegers(" ");
                 for (var col = 0; col < Board.Size; col++)
                 {
                     board[(row * Board.Size) + col] = rowNumbers[col];

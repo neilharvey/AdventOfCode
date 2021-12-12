@@ -2,7 +2,7 @@ namespace AdventOfCode.Y2021.Day5;
 
 public class Solution : IPuzzleSolution
 {
-    public int Part1(StreamReader reader)
+    public long Part1(StreamReader reader)
     {
         var lineSegments = GetLineSegments(reader)
             .Where(s => s.IsHorizontal || s.IsVertical);
@@ -10,7 +10,7 @@ public class Solution : IPuzzleSolution
         return CountIntersections(lineSegments);
     }
 
-    public int Part2(StreamReader reader)
+    public long Part2(StreamReader reader)
     {
         var lineSegments = GetLineSegments(reader);
         return CountIntersections(lineSegments);

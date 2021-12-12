@@ -2,7 +2,7 @@
 {
     public static class StringExtensions
     {
-        public static IList<int> ToListOfInt(this string value, string separator = ",")
+        public static IReadOnlyList<int> AsIntegers(this string value, string separator = ",")
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -10,7 +10,10 @@
             }
             else
             {
-                return value.Split(separator, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x)).ToList();
+                return value
+                    .Split(separator, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToList();
             }
         }
     }
