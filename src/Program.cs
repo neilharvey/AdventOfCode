@@ -2,9 +2,9 @@
 using CommandLine;
 
 Parser.Default.ParseArguments<Options>(args)
-    .WithParsed(o =>
+    .WithParsed(options =>
     {
-        var fileInfo = new FileInfo(o.File);
+        var fileInfo = FileLocator.FindFile(options.File, options.Year, options.Day);
 
         if (!fileInfo.Exists)
         {
@@ -12,17 +12,17 @@ Parser.Default.ParseArguments<Options>(args)
             return;
         }
 
-        var solution = SolutionFactory.Create(o.Year.Value, o.Day.Value);
+        var solution = SolutionFactory.Create(options.Year, options.Day);
         if (solution == null)
         {
-            Console.WriteLine($"Solution for {o.Year} day {o.Day} not found");
+            Console.WriteLine($"Solution for {options.Year} day {options.Day} not found");
             return;
         }
 
         var stream = File.OpenRead(fileInfo.FullName);
         var reader = new StreamReader(stream);
         var sw = System.Diagnostics.Stopwatch.StartNew();
-        var answer = o.Part == 1 ? solution.Part1(reader) : solution.Part2(reader);
+        var answer = options.Part == 1 ? solution.Part1(reader) : solution.Part2(reader);
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine($"{answer} [{sw.ElapsedMilliseconds}ms]");
         Console.ResetColor();
