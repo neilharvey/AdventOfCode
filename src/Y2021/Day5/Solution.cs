@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2021.Day5;
+﻿namespace AdventOfCode.Y2021.Day5;
 
 public class Solution : IPuzzleSolution
 {

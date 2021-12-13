@@ -1,88 +1,87 @@
-﻿namespace AdventOfCode.Y2021.Day4
+﻿namespace AdventOfCode.Y2021.Day4;
+
+public class Board
 {
-    public class Board
+    public const int Size = 5;
+
+    private readonly int[] _numbers = new int[Size * Size];
+    private readonly bool[] _seen = new bool[Size * Size];
+    private int? _winningNumber;
+
+    public int this[int index]
     {
-        public const int Size = 5;
+        get => _numbers[index];
+        set => _numbers[index] = value;
+    }
 
-        private readonly int[] _numbers = new int[Size * Size];
-        private readonly bool[] _seen = new bool[Size * Size];
-        private int? _winningNumber;
+    public void SetSeen(int number)
+    {
+        var index = Array.IndexOf(_numbers, number);
 
-        public int this[int index]
+        if (index >= 0)
         {
-            get => _numbers[index];
-            set => _numbers[index] = value;
+            _seen[index] = true;
         }
 
-        public void SetSeen(int number)
+        if (HasBingo())
         {
-            var index = Array.IndexOf(_numbers, number);
-
-            if (index >= 0)
-            {
-                _seen[index] = true;
-            }
-
-            if (HasBingo())
-            {
-                _winningNumber = number;
-            }
+            _winningNumber = number;
         }
+    }
 
-        public bool HasBingo()
+    public bool HasBingo()
+    {
+        // horizontal
+        for (var row = 0; row < Size; row++)
         {
-            // horizontal
-            for (var row = 0; row < Size; row++)
-            {
-                var hasRow = true;
-                for (var col = 0; col < Size; col++)
-                {
-                    hasRow &= _seen[(row * Size) + col];
-                }
-
-                if (hasRow)
-                {
-                    return true;
-                }
-            }
-
-            // vertical
+            var hasRow = true;
             for (var col = 0; col < Size; col++)
             {
-                // 0 1 2 3 4
-                // 5 6 7 8 9 
-                var hasCol = true;
-                for (var row = 0; row < Size; row++)
-                {
-                    hasCol &= _seen[(row * Size) + col];
-                }
-
-                if (hasCol)
-                {
-                    return true;
-                }
+                hasRow &= _seen[(row * Size) + col];
             }
 
-            return false;
+            if (hasRow)
+            {
+                return true;
+            }
         }
 
-        public int Score()
+        // vertical
+        for (var col = 0; col < Size; col++)
         {
-            if (!HasBingo())
+            // 0 1 2 3 4
+            // 5 6 7 8 9 
+            var hasCol = true;
+            for (var row = 0; row < Size; row++)
             {
-                return 0;
+                hasCol &= _seen[(row * Size) + col];
             }
 
-            var sumOfUnmarked = 0;
-            for (var i = 0; i < 25; i++)
+            if (hasCol)
             {
-                if (!_seen[i])
-                {
-                    sumOfUnmarked += _numbers[i];
-                }
+                return true;
             }
-
-            return sumOfUnmarked * _winningNumber.Value;
         }
+
+        return false;
+    }
+
+    public int Score()
+    {
+        if (!HasBingo())
+        {
+            return 0;
+        }
+
+        var sumOfUnmarked = 0;
+        for (var i = 0; i < 25; i++)
+        {
+            if (!_seen[i])
+            {
+                sumOfUnmarked += _numbers[i];
+            }
+        }
+
+        return sumOfUnmarked * _winningNumber.Value;
     }
 }

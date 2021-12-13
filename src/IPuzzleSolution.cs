@@ -1,9 +1,8 @@
-﻿namespace AdventOfCode
-{
-    public interface IPuzzleSolution
-    {
-        long Part1(StreamReader reader);
+﻿namespace AdventOfCode;
 
-        long Part2(StreamReader reader);
-    }
+public interface IPuzzleSolution
+{
+    long Part1(StreamReader reader);
+
+    long Part2(StreamReader reader);
 }

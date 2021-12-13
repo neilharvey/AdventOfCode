@@ -1,4 +1,5 @@
 ﻿namespace AdventOfCode.Y2021.Day3;
+
 public class Solution : IPuzzleSolution
 {
     public long Part1(StreamReader reader)
@@ -9,7 +10,7 @@ public class Solution : IPuzzleSolution
         var epsilonRate = 0;
         var nodes = new List<TrieNode>() { trie };
 
-        for(var depth = 0; depth < trie.Depth; depth++)
+        for (var depth = 0; depth < trie.Depth; depth++)
         {
             var zero = nodes.Where(x => x.Children[0] != null).Sum(x => x.Children[0].Value);
             var one = nodes.Where(x => x.Children[1] != null).Sum(x => x.Children[1].Value);

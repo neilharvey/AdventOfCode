@@ -35,7 +35,7 @@ public class Solution : IPuzzleSolution
 
         foreach (var number in numbers)
         {
-            foreach(var board in boards)
+            foreach (var board in boards)
             {
                 if (!board.HasBingo())
                 {

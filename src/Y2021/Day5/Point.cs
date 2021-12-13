@@ -1,4 +1,4 @@
-namespace AdventOfCode.Y2021.Day5;
+﻿namespace AdventOfCode.Y2021.Day5;
 
 public struct Point
 {
@@ -18,7 +18,7 @@ public struct Point
         return new Point(int.Parse(parts[0]), int.Parse(parts[1]));
     }
 
-    public static bool operator==(Point x, Point y)
+    public static bool operator ==(Point x, Point y)
     {
         return x.X == y.X && x.Y == y.Y;
     }
@@ -35,7 +35,7 @@ public struct Point
             return false;
         }
 
-        if(obj is not Point point)
+        if (obj is not Point point)
         {
             return false;
         }
