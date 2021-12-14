@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace AdventOfCode.Y2021.Day4;
 
-namespace AdventOfCode.Y2021.Day4;
 public class Solution : IPuzzleSolution
 {
     public long Part1(StreamReader reader)

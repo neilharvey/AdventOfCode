@@ -9,13 +9,5 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <EditorConfigFiles Remove="D:\Users\Neil\Documents\Projects\AdventOfCode\src\.editorconfig" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <None Include="D:\Users\Neil\Documents\Projects\AdventOfCode\src\.editorconfig" />
-  </ItemGroup>
 
 </Project>
