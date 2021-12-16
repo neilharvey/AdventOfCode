@@ -78,9 +78,6 @@ public class Solution : IPuzzleSolution
             }
         }
 
-        var sorted = scores.OrderBy(x => x).ToList();
-        var mid = (sorted.Count - 1) / 2D;
-        var median = (sorted[(int)mid] + sorted[(int)(mid + 0.5)]) / 2;
-        return median;
+        return scores.Median();
     }
 }
