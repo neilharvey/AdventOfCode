@@ -2,22 +2,15 @@
 {
     public class Solution : IPuzzleSolution
     {
+        private delegate bool IsVisitedCallback(Cave cave, List<Cave> path);
+
         public long Part1(StreamReader reader)
-        {
-            var caves = ReadCaveSystem(reader);
-            var paths = Explore1(caves.Start, new List<Cave>());
-            return paths.Count;
-        }
+            => FindAllPaths(reader, IsSmallCaveVisitedOnce);
 
         public long Part2(StreamReader reader)
-        {
-            //var caves = ReadCaveSystem(reader);
-            //var paths = Explore2(caves.Start, new List<Cave>(), new Dictionary<Cave, int>());
-            //return paths.Count;
-            throw new NotImplementedException();
-        }
+            => FindAllPaths(reader, IsSmallCaveVisitedOnceAndNoOtherVisitedTwice);
 
-        private static CaveSystem ReadCaveSystem(StreamReader reader)
+        private static long FindAllPaths(StreamReader reader, IsVisitedCallback callback)
         {
             var caves = new CaveSystem();
 
@@ -27,11 +20,12 @@
                 caves.AddConnection(nodes[0], nodes[1]);
             }
 
-            return caves;
+            var paths = Explore(caves.Start, new List<Cave>(), callback);
+
+            return paths.Count;
         }
 
-        // possible memoization optimisation here -?
-        private List<List<Cave>> Explore1(Cave cave, List<Cave> path)
+        private static List<List<Cave>> Explore(Cave cave, List<Cave> path, IsVisitedCallback isVisited)
         {
             path.Add(cave);
 
@@ -45,10 +39,10 @@
             {
                 foreach (var adj in cave.Adjacent)
                 {
-                    if (!IsVisited(adj, path))
+                    if (!(adj.IsStart || isVisited(adj, path)))
                     {
                         var branch = new List<Cave>(path);
-                        paths.AddRange(Explore1(adj, branch));
+                        paths.AddRange(Explore(adj, branch, isVisited));
                     }
                 }
             }
@@ -56,9 +50,29 @@
             return paths;
         }
 
-        private static bool IsVisited(Cave adj, List<Cave> path)
+        private static bool IsSmallCaveVisitedOnce(Cave adj, List<Cave> path)
         {
-            return adj.IsStart || (adj.IsSmall && path.Contains(adj));
+            return adj.IsSmall && path.Contains(adj);
+        }
+
+        private static bool IsSmallCaveVisitedOnceAndNoOtherVisitedTwice(Cave adj, List<Cave> path)
+        {
+            if (!adj.IsSmall)
+            {
+                return false;
+            }
+
+            if (!path.Contains(adj))
+            {
+                return false;
+            }
+
+            var anySmallCaveVisitedTwice = path
+                .Where(x => x.IsSmall)
+                .GroupBy(x => x.Label)
+                .Any(g => g.Count() > 1);
+
+            return anySmallCaveVisitedTwice;
         }
     }
 }
