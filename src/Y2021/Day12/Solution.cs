@@ -2,7 +2,7 @@
 {
     public class Solution : IPuzzleSolution
     {
-        private delegate bool IsVisitedCallback(Cave cave, List<Cave> path);
+        private delegate bool IsVisitedCallback(Cave cave, Path path);
 
         public long Part1(StreamReader reader)
             => FindAllPaths(reader, IsSmallCaveVisitedOnce);
@@ -20,16 +20,16 @@
                 caves.AddConnection(nodes[0], nodes[1]);
             }
 
-            var paths = Explore(caves.Start, new List<Cave>(), callback);
+            var paths = Explore(caves.Start, new Path(), callback);
 
             return paths.Count;
         }
 
-        private static List<List<Cave>> Explore(Cave cave, List<Cave> path, IsVisitedCallback isVisited)
+        private static List<Path> Explore(Cave cave, Path path, IsVisitedCallback isVisited)
         {
             path.Add(cave);
 
-            var paths = new List<List<Cave>>();
+            var paths = new List<Path>();
 
             if (cave.IsEnd)
             {
@@ -41,7 +41,7 @@
                 {
                     if (!(adj.IsStart || isVisited(adj, path)))
                     {
-                        var branch = new List<Cave>(path);
+                        var branch = new Path(path);
                         paths.AddRange(Explore(adj, branch, isVisited));
                     }
                 }
@@ -50,12 +50,12 @@
             return paths;
         }
 
-        private static bool IsSmallCaveVisitedOnce(Cave adj, List<Cave> path)
+        private static bool IsSmallCaveVisitedOnce(Cave adj, Path path)
         {
             return adj.IsSmall && path.Contains(adj);
         }
 
-        private static bool IsSmallCaveVisitedOnceAndNoOtherVisitedTwice(Cave adj, List<Cave> path)
+        private static bool IsSmallCaveVisitedOnceAndNoOtherVisitedTwice(Cave adj, Path path)
         {
             if (!adj.IsSmall)
             {
@@ -67,12 +67,7 @@
                 return false;
             }
 
-            var anySmallCaveVisitedTwice = path
-                .Where(x => x.IsSmall)
-                .GroupBy(x => x.Label)
-                .Any(g => g.Count() > 1);
-
-            return anySmallCaveVisitedTwice;
+            return path.AnySmallCaveVisitedTwice;
         }
     }
 }
