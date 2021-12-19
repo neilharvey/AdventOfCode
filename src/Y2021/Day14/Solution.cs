@@ -5,51 +5,76 @@ namespace AdventOfCode.Y2021.Day14
     public class Solution : IPuzzleSolution
     {
         public long Part1(StreamReader reader)
+            => Polymerization(reader, 10);
+
+        public long Part2(StreamReader reader)
+            => Polymerization(reader, 40);
+
+        private static long Polymerization(StreamReader reader, int steps)
         {
             var template = reader.ReadLine();
+            var tokens = new Dictionary<string, long>();
+            for (var i = 0; i < template.Length - 1; i++)
+            {
+                var token = template.Substring(i, 2);
+                if (!tokens.TryAdd(token, 1))
+                {
+                    tokens[token]++;
+                }
+            }
+
             reader.ReadLine();
-            var rules = new Dictionary<string, char>();
+            var rules = new Dictionary<string, (string, string)>();
             while (reader.TryReadLine(out string line))
             {
                 var pair = line.Split(" -> ");
-                rules.Add(pair[0], pair[1][0]);
+                var sub = pair[0];
+                var add1 = $"{pair[0][0]}{pair[1]}";
+                var add2 = $"{pair[1]}{pair[0][1]}";
+                rules.Add(sub, (add1, add2));
+                tokens.TryAdd(sub, 0);
+                tokens.TryAdd(add1, 0);
+                tokens.TryAdd(add2, 0);
             }
 
-            var sb = new StringBuilder(template);
-            for (var step = 1; step <= 10; step++)
+            for (var step = 1; step <= steps; step++)
             {
-                var insertions = new List<(int, char)>();
-
-                for (var i = 0; i < sb.Length - 1; i++)
+                // Record the amount we need to change before making changes
+                var alterations = new Dictionary<string, long>();
+                foreach (var rule in rules)
                 {
-                    var token = sb.ToString().Substring(i, 2);
-                    if (rules.ContainsKey(token))
-                    {
-                        insertions.Add((i + 1, rules[token]));
-                    }
+                    alterations.Add(rule.Key, tokens[rule.Key]);
                 }
 
-                for(var i = 0; i< insertions.Count; i++)
+                // Apply only the amounts we observed
+                foreach (var alteration in alterations)
                 {
-                    var insertion = insertions[i];
-                    sb.Insert(insertion.Item1 + i, insertion.Item2);
+                    tokens[alteration.Key] -= alteration.Value;
+                    tokens[rules[alteration.Key].Item1] += alteration.Value;
+                    tokens[rules[alteration.Key].Item2] += alteration.Value;
                 }
             }
 
-            var result = sb
-                .ToString()
-                .GroupBy(x => x)
-                .Select(x => new { Element = x.Key, Count = x.LongCount() })
-                .OrderBy(x => x.Count)
-                .Select(x => x.Count)
+            var characters = string.Join("", tokens.Keys)
+                .Distinct()
+                .ToDictionary(x => x, x => 0L);
+
+            foreach (var token in tokens)
+            {
+                var key = token.Key;
+                // Only need to account for the first of each pair...
+                characters[key[0]] += token.Value;
+            }
+
+            // ...and add on the last character of the original string
+            characters[template[^1]]++;
+
+            var ordered = characters
+                .Select(x => x.Value)
+                .OrderBy(x => x)
                 .ToList();
 
-            return result[^1] - result[0];
-        }
-
-        public long Part2(StreamReader reader)
-        {
-            throw new NotImplementedException();
+            return ordered[^1] - ordered[0];
         }
     }
 }
