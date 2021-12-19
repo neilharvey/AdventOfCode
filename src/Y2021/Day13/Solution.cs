@@ -10,6 +10,43 @@ namespace AdventOfCode.Y2021.Day13
     {
         public long Part1(StreamReader reader)
         {
+            var dots = FoldOrigami(reader, singleFold: true);
+            return dots.Count;
+        }
+
+
+        public long Part2(StreamReader reader)
+        {
+            var dots = FoldOrigami(reader, singleFold: false);
+            GetActivationCode(dots);
+            return 0;
+        }
+
+        private static void GetActivationCode(HashSet<Point> dots)
+        {
+            var maxX = dots.Max(x => x.X);
+            var maxY = dots.Max(x => x.Y);
+
+            var grid = new bool[maxX + 1, maxY + 1];
+            foreach (var dot in dots)
+            {
+                grid[dot.X, dot.Y] = true;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            for (var y = 0; y <= maxY; y++)
+            {
+                for (var x = 0; x <= maxX; x++)
+                {
+                    Console.Write(grid[x, y] ? "#" : " ");
+                }
+                Console.WriteLine();
+            }
+            Console.ResetColor();
+        }
+
+        private static HashSet<Point> FoldOrigami(StreamReader reader, bool singleFold)
+        {
             var dots = new HashSet<Point>();
 
             while (reader.TryReadLine(out string line))
@@ -48,15 +85,13 @@ namespace AdventOfCode.Y2021.Day13
                     var added = dots.Add(newPosition);
                 }
 
-                break; // part 1
+                if(singleFold)
+                {
+                    break;
+                }
             }
 
-            return dots.Count;
-        }
-
-        public long Part2(StreamReader reader)
-        {
-            throw new NotImplementedException();
+            return dots;
         }
     }
 }
