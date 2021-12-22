@@ -7,14 +7,12 @@ namespace AdventOfCode.Y2021.Day16
         public long Part1(StreamReader reader)
         {
             var packet = ReadPacket(reader);
-            Console.WriteLine(packet);
             return packet.VersionSum;
         }
 
         public long Part2(StreamReader reader)
         {
             var packet = ReadPacket(reader);
-            Console.WriteLine($"Packet Length {packet.Length}");
             return packet.Evaluate();
         }
 
@@ -22,7 +20,6 @@ namespace AdventOfCode.Y2021.Day16
         {
             var line = reader.ReadLine();
             var bits = string.Join("", line.Select(x => Map(x)));
-            Console.WriteLine($"Bits Length {bits.Length}");
             using var sr = new StringReader(bits);
             return ReadPacket(sr);
         }
@@ -55,7 +52,7 @@ namespace AdventOfCode.Y2021.Day16
         {
             var version = sr.ReadInt(3);
             var packetTypeId = sr.ReadInt(3);
-            var length = 6;
+            var bitsRead = 6;
 
             if (packetTypeId == 4)
             {
@@ -66,7 +63,7 @@ namespace AdventOfCode.Y2021.Day16
                 {
                     finalChunk = !sr.ReadBoolean();
                     chunks.Add(sr.ReadChunk(4));
-                    length += 5;
+                    bitsRead += 5;
                 }
                 while (!finalChunk);
 
@@ -75,7 +72,7 @@ namespace AdventOfCode.Y2021.Day16
                 var packet = new Packet(version, packetTypeId)
                 {
                     Value = value,
-                    Length = length
+                    Length = bitsRead
                 };
 
                 return packet;
@@ -83,26 +80,27 @@ namespace AdventOfCode.Y2021.Day16
             else
             {
                 var lengthTypeId = sr.Read();
+                bitsRead++;
                 IList<Packet> subPackets;
                 if (lengthTypeId == '0')
                 {
                     var lengthInBits = sr.ReadInt(15);
-                    length += 15;
+                    bitsRead += 15;
                     subPackets = ReadSubPacketsWithLength(sr, lengthInBits);
                 }
                 else
                 {
                     var noOfSubPackets = sr.ReadInt(11);
-                    length += 11;
+                    bitsRead += 11;
                     subPackets = ReadSubPackets(sr, noOfSubPackets);
                 }
 
-                length += subPackets.Sum(p => p.Length);
+                bitsRead += subPackets.Sum(p => p.Length);
                 var packet = new Packet(version, packetTypeId)
                 {
                     LengthTypeId = lengthTypeId,
                     SubPackets = subPackets,
-                    Length = length
+                    Length = bitsRead
                 };
 
                 return packet;
@@ -115,7 +113,6 @@ namespace AdventOfCode.Y2021.Day16
             for (var i = 0; i < noOfSubPackets; i++)
             {
                 var packet = ReadPacket(reader);
-                Console.WriteLine($"Read packet {i + 1} of {noOfSubPackets}");
                 packets.Add(packet);
             }
 
@@ -127,12 +124,11 @@ namespace AdventOfCode.Y2021.Day16
             var packets = new List<Packet>();
             var length = 0;
 
-            while (length < lengthInBits - 6)
+            while (length < lengthInBits)
             {
                 var packet = ReadPacket(reader);
                 packets.Add(packet);
                 length += packet.Length;
-                Console.WriteLine($"Read {length} of {lengthInBits} bits");
             }
 
             return packets;

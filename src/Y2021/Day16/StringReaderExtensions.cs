@@ -5,16 +5,7 @@
         public static int ReadInt(this StringReader reader, int length)
         {
             var chunk = reader.ReadChunk(length);
-            try
-            {
-                return Convert.ToInt32(chunk, 2);
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine($"Unable to read '{chunk}'");
-                Console.WriteLine($"Rest of stream '{reader.ReadToEnd()}'");
-                return 0;
-            }
+            return Convert.ToInt32(chunk, 2);
         }
 
         public static string ReadChunk(this StringReader reader, int length)

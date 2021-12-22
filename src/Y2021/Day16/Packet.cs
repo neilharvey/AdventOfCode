@@ -64,9 +64,9 @@
                 var indentation = "";
                 if (indent > 0)
                 {
-                    indentation = Environment.NewLine + new string(' ', indent);
+                    indentation = Environment.NewLine + new string(' ', indent * 2);
                 }
-                return $"{indentation}{op}({subPacketString})[{Evaluate()}]";
+                return $"{indentation}{op}({subPacketString})";
             }
         }
     }
