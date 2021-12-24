@@ -160,27 +160,6 @@ namespace AdventOfCode.Y2021.Day18
             return c != OpenBrace && c != CloseBrace && c != Separator;
         }
 
-        private static void Debug(List<char> pair)
-        {
-            var syntax = new char[] { OpenBrace, CloseBrace, Separator };
-            var bits = pair.Select(x => syntax.Contains(x) ? x.ToString() : Convert.ToInt64(x - '0').ToString());
-            var value = string.Join("", bits);
-            var nesting = 0;
-            for (var i = 0; i < value.Length; i++)
-            {
-                if (nesting <= 4)
-                    Console.ResetColor();
-                if (value[i] == OpenBrace)
-                    nesting++;
-                if (value[i] == CloseBrace)
-                    nesting--;
-                if (nesting > 4)
-                    Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(value[i]);
-            }
-            Console.WriteLine();
-        }
-
         private long Magnitude(List<char> sum)
         {
             var value = string.Join("", sum);
