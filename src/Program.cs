@@ -4,7 +4,8 @@ using CommandLine;
 Parser.Default.ParseArguments<Options>(args)
     .WithParsed(options =>
     {
-        var fileInfo = FileLocator.FindFile(options.File, options.Year, options.Day);
+        var year = options.Year ?? 2021;
+        var fileInfo = FileLocator.FindFile(options.File, year, options.Day);
 
         if (!fileInfo.Exists)
         {
@@ -12,10 +13,10 @@ Parser.Default.ParseArguments<Options>(args)
             return;
         }
 
-        var solution = SolutionFactory.Create(options.Year, options.Day);
+        var solution = SolutionFactory.Create(year, options.Day);
         if (solution == null)
         {
-            Console.WriteLine($"Solution for {options.Year} day {options.Day} not found");
+            Console.WriteLine($"Solution for {year} day {options.Day} not found");
             return;
         }
 

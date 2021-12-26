@@ -7,8 +7,8 @@ public class Options
     [Option(Required = true, HelpText = "Name of the input file to use.")]
     public string File { get; set; }
 
-    [Option(Required = true, HelpText = "Year of the puzzle.")]
-    public int Year { get; set; }
+    [Option(Required = false, HelpText = "Year of the puzzle.")]
+    public int? Year { get; set; }
 
     [Option(Required = true, HelpText = "Day of the puzzle.")]
     public int Day { get; set; }
