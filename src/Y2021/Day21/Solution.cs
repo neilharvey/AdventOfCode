@@ -4,32 +4,77 @@
     {
         public long Part1(StreamReader reader)
         {
-            var line1 = reader.ReadLine();
-            var line2 = reader.ReadLine();
-            var spaces = new int[2];
-            spaces[0] = Convert.ToInt32(line1[28..]);
-            spaces[1] = Convert.ToInt32(line2[28..]);
+            var game = ReadStartPositions(reader);
 
             var turn = 0;
-            var rolls = 0;
-            var d = 6;
-            var scores = new int[2];
-            while (scores[0] < 1000 && scores[1] < 1000)
+            var dice = 6;
+
+            while (!game.IsFinished(1000))
             {
                 var player = turn % 2;
-                spaces[player] = 1 + (spaces[player] + (d - 1)) % 10;
-                scores[player] += spaces[player];
-               d += 9;
+                game = game.Move(player, dice);
+                dice += 9;
                 turn++;
-                rolls += 3;
             }
 
-            return Math.Min(scores[0], scores[1]) * rolls;
+            return Math.Min(game.Player1Score, game.Player2Score) * (turn * 3);
         }
 
         public long Part2(StreamReader reader)
         {
-            throw new NotImplementedException();
+            var start = ReadStartPositions(reader);
+            var gamesInProgress = new Dictionary<GameState, long>
+            {
+                { start, 1 }
+            };
+
+            var distribution = new Dictionary<int, int>
+            {
+                { 3, 1 },
+                { 4, 3 },
+                { 5, 6 },
+                { 6, 7 },
+                { 7, 6 },
+                { 8, 3 },
+                { 9, 1 }
+            };
+
+            var scores = new long[] { 0, 0 };
+            var player = 0;
+
+            while (gamesInProgress.Any())
+            {
+                var newStates = new Dictionary<GameState, long>();
+                foreach (var game in gamesInProgress.Keys)
+                {
+                    foreach (var roll in distribution.Keys)
+                    {
+                        var newState = game.Move(player, roll);
+                        var amount = distribution[roll] * gamesInProgress[game];
+                        if (newState.IsFinished(21))
+                        {
+                            scores[player] += amount;
+                        }
+                        else
+                        {
+                            newStates.TryAdd(newState, 0);
+                            newStates[newState] += amount;
+                        }
+                    }
+                }
+
+                gamesInProgress = newStates;
+                player = 1 - player;
+            }
+
+            return scores.Max();
+        }
+
+        private static GameState ReadStartPositions(StreamReader reader)
+        {
+            var player1 = Convert.ToInt32(reader.ReadLine()[28..]);
+            var player2 = Convert.ToInt32(reader.ReadLine()[28..]);
+            return new GameState(player1, 0, player2, 0);
         }
     }
 }
