@@ -1,6 +1,4 @@
-﻿namespace AdventOfCode.Y2021.Day5;
-
-public struct LineSegment
+﻿public struct LineSegment
 {
     public LineSegment(Point start, Point end)
     {
