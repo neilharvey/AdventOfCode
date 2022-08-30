@@ -27,4 +27,3 @@ var lines = File.ReadAllLines(args.First());
 var positions = lines[0].AsIntegers();
 Console.WriteLine($"Part One: {Part1(positions)}");
 Console.WriteLine($"Part Two: {Part2(positions)}");
-
