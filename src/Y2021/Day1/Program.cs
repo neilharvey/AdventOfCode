@@ -1,19 +1,18 @@
-﻿static long CalculateDepthIncreases(string[] lines, int windowSize)
+﻿static long CalculateDepthIncreases(string[] report, int windowSize)
 {
     var increases = 0;
     var window = new Queue<int>(3);
 
     for (var i = 0; i < windowSize; i++)
     {
-        var depth = int.Parse(lines[i]);
+        var depth = int.Parse(report[i]);
         window.Enqueue(depth);
     }
 
-    for (var i = windowSize; i < lines.Length; i++)
+    for (var i = windowSize; i < report.Length; i++)
     {
-        var line = lines[i];
         var previousDepth = window.Dequeue();
-        var currentDepth = int.Parse(line);
+        var currentDepth = int.Parse(report[i]);
         window.Enqueue(currentDepth);
         if (currentDepth > previousDepth)
         {
@@ -24,6 +23,6 @@
     return increases;
 }
 
-var lines = File.ReadAllLines(args.First());
-Console.WriteLine($"Part One: {CalculateDepthIncreases(lines, 1)}");
-Console.WriteLine($"Part Two: {CalculateDepthIncreases(lines, 3)}");
+var report = File.ReadAllLines(args.First());
+Console.WriteLine($"Part One: {CalculateDepthIncreases(report, 1)}");
+Console.WriteLine($"Part Two: {CalculateDepthIncreases(report, 3)}");

@@ -1,4 +1,6 @@
-﻿public static class StringExtensions
+﻿namespace Day6;
+
+public static class StringExtensions
 {
     public static IReadOnlyList<int> AsIntegers(this string value, string separator = ",")
     {

@@ -1,4 +1,6 @@
-﻿public class TrieNode
+﻿namespace Day3;
+
+public class TrieNode
 {
     public TrieNode()
     {

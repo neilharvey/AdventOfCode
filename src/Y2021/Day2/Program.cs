@@ -1,46 +1,43 @@
-﻿long Part1(string[] lines)
-{
-    var horizontal = 0;
-    var depth = 0;
-
-    foreach(var line in lines)
-    {
-        var separator = line.IndexOf(" ");
-        var command = line[..separator];
-        var value = int.Parse(line[(separator + 1)..]);
-        switch (command)
-        {
-            case "forward": horizontal += value; break;
-            case "down": depth += value; break;
-            case "up": depth -= value; break;
-        }
-    }
-
-    return horizontal * depth;
-}
-
-long Part2(string[] lines)
+﻿static long PilotSubmarine(string[] commands, bool verticalControlsAim)
 {
     var horizontal = 0;
     var depth = 0;
     var aim = 0;
 
-    foreach(var line in lines)
+    foreach (var command in commands)
     {
-        var separator = line.IndexOf(" ");
-        var command = line[..separator];
-        var value = int.Parse(line[(separator + 1)..]);
-        switch (command)
+        var separator = command.IndexOf(" ");
+        var direction = command[..separator];
+        var value = int.Parse(command[(separator + 1)..]);
+
+        switch (direction)
         {
             case "forward":
                 horizontal += value;
-                depth += (aim * value);
+                if (verticalControlsAim)
+                {
+                    depth += (aim * value);
+                }
                 break;
             case "down":
-                aim += value;
+                if (verticalControlsAim)
+                {
+                    aim += value;
+                }
+                else
+                {
+                    depth += value;
+                }
                 break;
             case "up":
-                aim -= value;
+                if (verticalControlsAim)
+                {
+                    aim -= value;
+                }
+                else
+                {
+                    depth -= value;
+                }
                 break;
         }
     }
@@ -48,6 +45,6 @@ long Part2(string[] lines)
     return horizontal * depth;
 }
 
-var lines = File.ReadAllLines(args.First());
-Console.WriteLine($"Part One: {Part1(lines)}");
-Console.WriteLine($"Part Two: {Part2(lines)}");
+var commands = File.ReadAllLines(args.First());
+Console.WriteLine($"Part One: {PilotSubmarine(commands, false)}");
+Console.WriteLine($"Part Two: {PilotSubmarine(commands, true)}");

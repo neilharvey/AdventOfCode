@@ -1,6 +1,8 @@
-﻿static long Part1(string[] lines)
+﻿using Day3;
+
+static long CalculatePowerConsumption(string[] diagnostics)
 {
-    var trie = CreateTrie(lines);
+    var trie = CreateTrie(diagnostics);
 
     var gammaRate = 0;
     var epsilonRate = 0;
@@ -27,9 +29,9 @@
     return gammaRate * epsilonRate;
 }
 
-static long Part2(string[] lines)
+static long CalculateLifeSupportRating(string[] diagnostics)
 {
-    var trie = CreateTrie(lines);
+    var trie = CreateTrie(diagnostics);
     var oxygenGeneratorRating = FindPath(trie, (x, y) => x.Value <= y.Value ? x : y);
     var co2scrubberRating = FindPath(trie, (x, y) => x.Value > y.Value ? x : y);
 
@@ -70,6 +72,6 @@ static int FindPath(TrieNode trie, Func<TrieNode, TrieNode, TrieNode> compare)
     return node.ToInt32();
 }
 
-var lines = File.ReadAllLines(args.First());
-Console.WriteLine($"Part One: {Part1(lines)}");
-Console.WriteLine($"Part Two: {Part2(lines)}");
+var diagnostics = File.ReadAllLines(args.First());
+Console.WriteLine($"Part One: {CalculatePowerConsumption(diagnostics)}");
+Console.WriteLine($"Part Two: {CalculateLifeSupportRating(diagnostics)}");

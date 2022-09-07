@@ -1,4 +1,6 @@
-﻿static long SimulateLanternfish(IEnumerable<int> initialState, int daysToSimulate)
+﻿using Day6;
+
+static long SimulateLanternfish(IEnumerable<int> initialState, int daysToSimulate)
 {
     var fish = new long[9];
     foreach (var value in initialState)
