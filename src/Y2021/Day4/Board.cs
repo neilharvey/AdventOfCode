@@ -1,6 +1,4 @@
-﻿namespace AdventOfCode.Y2021.Day4;
-
-public class Board
+﻿public class Board
 {
     public const int Size = 5;
 

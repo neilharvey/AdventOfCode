@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Y2021.Day3;
+﻿namespace Day3;
 
 public class TrieNode
 {

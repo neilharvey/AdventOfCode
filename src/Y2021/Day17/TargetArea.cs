@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode.Y2021.Day17;
+﻿namespace Day17;
 
 public readonly record struct TargetArea
 {
