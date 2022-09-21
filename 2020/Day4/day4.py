@@ -1,6 +1,5 @@
 import sys
 import re
-from functools import reduce
 
 valid_ecl = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
 
