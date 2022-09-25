@@ -1,4 +1,3 @@
-from dis import Instruction
 import sys
 
 def run_boot_code(instructions):
