@@ -1,47 +1,80 @@
+import copy
 import sys
 
-def dump(matrix):
-    for m in matrix:
-        print(m)
+directions = [(row,col) for row in range(-1, 2) for col in range(-1,2) if row != 0 or col != 0]
 
-def get_adjacent(seating):
+def get_seats(seating):
+    seats = []
+    for row in range(0, len(seating)):
+        for col in range(0, len(seating[0])):
+            if seating[row][col] != '.':
+                seats.append((row,col))
+    return seats
 
-    cols = len(seating[0])
-    rows = len(seating)
-    adjacent = list(map(lambda i: [0] * len(i), seating))
+def get_adjacent_seats(seats, seating_plan):
 
-    for col in range(0, cols):
-        for row in range(0, rows):
-            adjacent[row][col] = 0
-            for x in range(col - 1, col + 2):
-                for y in range(row -1, row + 2):
-                    if (x != col or y != row) and x >= 0 and y >= 0 and x < cols and y < rows:
-                        if seating[y][x] == '#':
-                            adjacent[row][col] += 1    
+    adjacent = [[0] * len(row) for row in seating_plan]
+
+    for seat in seats:
+        for direction in directions:
+            row = seat[0] + direction[0]
+            col = seat[1] + direction[1]
+            if row >= 0 and col >= 0 and row < len(seating_plan) and col < len(seating_plan[0]) and seating_plan[row][col] == '#':
+                adjacent[seat[0]][seat[1]] += 1
+
     return adjacent
+
+def get_visible_seats(seats,seating_plan):
+
+    visible = [[0] * len(row) for row in seating_plan]
+
+    for seat in seats:
+        for direction in directions:
+            scale = 1
+            row = seat[0] + (scale * direction[0])
+            col = seat[1] + (scale * direction[1])
+
+            while row >= 0 and col >= 0 and row < len(seating_plan) and col < len(seating_plan[0]):
+
+                if seating_plan[row][col] == '.':
+                    scale += 1
+                    row = seat[0] + (scale * direction[0])
+                    col = seat[1] + (scale * direction[1])
+                else:
+                    if seating_plan[row][col] == '#':
+                        visible[seat[0]][seat[1]] += 1
+                    break
+
+    return visible
+
+def get_occupied_seats(seating_plan, adacency_func, max_neighbours):
+
+    # We need to take a copy because we will mutate the plan
+    plan = copy.deepcopy(seating_plan)
+    seats = get_seats(plan)
+    state_changed = True
+
+    while state_changed:
+
+        state_changed = False
+        adjacent_seats = adacency_func(seats, plan)
+
+        for seat in seats:
+            row = seat[0]
+            col = seat[1]
+            if plan[row][col] == 'L' and adjacent_seats[row][col] == 0:
+                plan[row][col] = '#'
+                state_changed = True
+            elif plan[row][col] == '#' and adjacent_seats[row][col] >= max_neighbours:
+                plan[row][col] = 'L'
+                state_changed = True              
+
+    return sum(map(lambda row: sum(map(lambda seat:1 if seat == '#' else 0, row)), plan))
     
 
 path = sys.argv[1] if len(sys.argv) > 1 else "example.txt"
 with open(path) as f:
-   seating = list(map(list, f.read().splitlines()))
+   seating_plan = list(map(list, f.read().splitlines()))
 
-state_changed = True
-i = 0
-while state_changed:
-    i += 1
-    #print(f"== Round {i}: ==")
-    state_changed = False
-    adjacent_seats = get_adjacent(seating)
-    for row in range(0, len(seating)):
-        for col in range(0, len(seating[row])):
-            if seating[row][col] == 'L' and adjacent_seats[row][col] == 0:
-                seating[row][col] = '#'
-                state_changed = True
-            if seating[row][col] == '#' and adjacent_seats[row][col] >= 4:
-                seating[row][col] = 'L'
-                state_changed = True    
-    #dump(seating)
-    #dump(adjacent_seats)
-
-occupied_seats = sum(map(lambda row: sum(map(lambda seat:1 if seat == '#' else 0, row)), seating))
-print(occupied_seats)
+print(f"Part One: {get_occupied_seats(seating_plan, get_adjacent_seats, 4)}")
+print(f"Part Two: {get_occupied_seats(seating_plan, get_visible_seats, 5)}")
