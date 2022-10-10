@@ -22,6 +22,11 @@ def create_regex(rule_number='0', depth=15):
     else:
         return regex
 
+def count_matching_words():
+    pattern = re.compile(create_regex())
+    matching_words = [word for word in words if pattern.fullmatch(word)]
+    return len(matching_words)
+
 path = sys.argv[1] if len(sys.argv) > 1 else "example.txt"
 with open(path) as f:
     input = f.read().splitlines()
@@ -35,12 +40,8 @@ for line in input:
     elif len(line) > 0:
         words.append(line)
 
-pattern = re.compile(create_regex())
-matching_words = [word for word in words if pattern.fullmatch(word)]
-print(f"Part One: {len(matching_words)}")
+print(f"Part One: {count_matching_words()}")
 
 rules['8'] = '42 | 42 8'
 rules['11'] = '42 31 | 42 11 31'
-pattern = re.compile(create_regex())
-matching_words = [word for word in words if pattern.fullmatch(word)]
-print(f"Part Two: {len(matching_words)}")
+print(f"Part Two: {count_matching_words()}")
