@@ -1,7 +1,11 @@
 import sys
 import re
 
-def create_regex(rules, rule_number):
+# depth here was determined through manually testing different values
+def create_regex(rule_number='0', depth=15):
+    if depth == 0:
+        return ""
+
     rule = rules[rule_number]
     if '\"' in rule:
         return rule.replace('\"',"")
@@ -9,7 +13,7 @@ def create_regex(rules, rule_number):
     regex = ""    
     for sub_rule in rule.split(" "):
         if sub_rule.isnumeric():
-            regex += create_regex(rules, sub_rule)
+            regex += create_regex(sub_rule, depth-1)
         else: 
             regex += sub_rule # "|"
 
@@ -31,7 +35,12 @@ for line in input:
     elif len(line) > 0:
         words.append(line)
 
-rule_regex = create_regex(rules, '0')
-pattern = re.compile(f"^{rule_regex}$")
-matching_words = [word for word in words if pattern.match(word)]
+pattern = re.compile(create_regex())
+matching_words = [word for word in words if pattern.fullmatch(word)]
 print(f"Part One: {len(matching_words)}")
+
+rules['8'] = '42 | 42 8'
+rules['11'] = '42 31 | 42 11 31'
+pattern = re.compile(create_regex())
+matching_words = [word for word in words if pattern.fullmatch(word)]
+print(f"Part Two: {len(matching_words)}")
