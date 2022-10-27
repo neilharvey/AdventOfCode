@@ -32,8 +32,6 @@ def crab_cups(cups, start, total_moves):
         # They keep the same order as when they were picked up.
         tmp = cups[destination - 1]
         cups[destination - 1] = x
-        cups[x - 1] = y
-        cups[y - 1] = z
         cups[z - 1] = tmp
 
         # The crab selects a new current cup: the cup which is immediately clockwise of the current cup.
