@@ -1,55 +1,35 @@
 import { readFileSync } from 'fs';
 import path from 'path'
 
-function part1_strategy(x: string, y:string) {
-    switch(y) {
-        case 'X' : return 'A';
-        case 'Y' : return 'B';
-        default : return 'C'
-    }
+const part1_strategy: { [value: string]:number} = {
+    'A X':3 + 1,
+    'A Y':6 + 2,
+    'A Z':0 + 3,
+    'B X':0 + 1,
+    'B Y':3 + 2,
+    'B Z':6 + 3,
+    'C X':6 + 1,
+    'C Y':0 + 2,
+    'C Z':3 + 3,
 }
 
-function part2_strategy(x: string, y:string) {
-    switch(y) {
-        case 'Y': // Draw 
-            return x;
-        case 'X': // Lose
-            switch(x) {
-                case 'A' : return 'C';
-                case 'B' : return 'A';
-                default : return 'B';
-            } 
-        default: // Win
-            switch(x) {
-                case 'A' : return 'B';
-                case 'B' : return 'C';
-                default : return 'A';
-            }
-    }
+const part2_strategy: { [value:string]:number} = {
+    'A X':0 + 3,
+    'A Y':3 + 1,
+    'A Z':6 + 2,
+    'B X':0 + 1,
+    'B Y':3 + 2,
+    'B Z':6 + 3,
+    'C X':0 + 2,
+    'C Y':3 + 3,
+    'C Z':6 + 1,
 }
 
-function score(x: string, y: string) {
-
-    const shape_scores: { [label: string]: number } = {
-        'A': 1,
-        'B': 2,
-        'C': 3
-    };
-
-    const outcome_score = x == y ? 3 
-        : (x == 'A' && y == 'B' || x == 'B' && y == 'C' || x == 'C' && y == 'A') ? 6 : 0; 
-
-    return outcome_score + shape_scores[y];
-}
-
-function total_score(input:string[][], strategy:CallableFunction) {
-    return input.map(x => [x[0], strategy(x[0],x[1])])
-    .map(x => score(x[0], x[1]))
-    .reduce((a,c) => a + c);
+function total_score(input:string[], strategy:{ [value:string]:number}) {
+    return input.map(x => strategy[x]).reduce((a,c) => a + c);
 }
 
 const fileName = path.resolve(__dirname, process.argv[2])
-const file = readFileSync(fileName, 'utf-8');
-const input = file.split("\r\n").map(x => x.split(' '));
+const input = readFileSync(fileName, 'utf-8').split("\r\n");
 console.log(`Part One: ${total_score(input, part1_strategy)}`);
 console.log(`Part Two: ${total_score(input, part2_strategy)}`);
