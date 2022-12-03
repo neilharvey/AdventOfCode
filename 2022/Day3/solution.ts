@@ -1,0 +1,23 @@
+import { readFileSync } from 'fs';
+import path from 'path'
+const fileName = path.resolve(__dirname, process.argv[2])
+const file = readFileSync(fileName, 'utf-8');
+const lines = file.split("\r\n");
+
+const lower_a = 97;
+const upper_a = 65;
+
+let priority_total = 0;
+
+lines.forEach(line => {
+
+    let first = new Set(line.substring(0, line.length / 2));
+    let second = new Set(line.substring(line.length / 2));
+    let common_item = new Set([...first].filter(x => second.has(x))).values().next().value;
+    let char_code = common_item.charCodeAt(0);
+    let priority = char_code >= lower_a ? 1 + char_code - lower_a : 27 + char_code - upper_a;
+    priority_total += priority;
+
+});
+
+console.log(priority_total);
