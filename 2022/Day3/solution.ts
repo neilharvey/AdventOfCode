@@ -4,20 +4,37 @@ const fileName = path.resolve(__dirname, process.argv[2])
 const file = readFileSync(fileName, 'utf-8');
 const lines = file.split("\r\n");
 
-const lower_a = 97;
-const upper_a = 65;
+function get_priority(item:string) {
+    const lower_a = 97;
+    const upper_a = 65;
+    const char_code = item.charCodeAt(0);
+    return char_code >= lower_a ? 1 + char_code - lower_a : 27 + char_code - upper_a;    
+}
 
-let priority_total = 0;
+function get_common_item(bags:Set<string>[]) {
+    return bags
+        .reduce((first, second) => new Set([...first].filter(x => second.has(x))))
+        .values()
+        .next()
+        .value;
+}
+
+let part1 = 0;
 
 lines.forEach(line => {
-
     let first = new Set(line.substring(0, line.length / 2));
     let second = new Set(line.substring(line.length / 2));
-    let common_item = new Set([...first].filter(x => second.has(x))).values().next().value;
-    let char_code = common_item.charCodeAt(0);
-    let priority = char_code >= lower_a ? 1 + char_code - lower_a : 27 + char_code - upper_a;
-    priority_total += priority;
-
+    let common_item = get_common_item([first, second]);
+    part1 += get_priority(common_item);
 });
 
-console.log(priority_total);
+console.log(`Part One: ${part1}`);
+
+let part2 = 0;
+
+for(let i = 0; i < lines.length; i += 3){
+    let common_item = get_common_item([new Set(lines[i]), new Set(lines[i+1]), new Set(lines[i+2])]);
+    part2 += get_priority(common_item);
+}
+
+console.log(`Part Two: ${part2}`);
