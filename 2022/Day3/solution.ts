@@ -22,9 +22,7 @@ function get_common_item(bags:Set<string>[]) {
 let part1 = 0;
 
 lines.forEach(line => {
-    let first = new Set(line.substring(0, line.length / 2));
-    let second = new Set(line.substring(line.length / 2));
-    let common_item = get_common_item([first, second]);
+    const common_item = get_common_item([new Set(line.substring(0, line.length / 2)), new Set(line.substring(line.length / 2))]);
     part1 += get_priority(common_item);
 });
 
@@ -33,7 +31,7 @@ console.log(`Part One: ${part1}`);
 let part2 = 0;
 
 for(let i = 0; i < lines.length; i += 3){
-    let common_item = get_common_item([new Set(lines[i]), new Set(lines[i+1]), new Set(lines[i+2])]);
+    const common_item = get_common_item([new Set(lines[i]), new Set(lines[i+1]), new Set(lines[i+2])]);
     part2 += get_priority(common_item);
 }
 
