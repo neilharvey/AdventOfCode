@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import path from 'path'
+import { readInput } from '../aoc';
+const input = readInput();
 
 const part1_strategy: { [value: string]:number} = {
     'A X':3 + 1,
@@ -29,7 +29,5 @@ function total_score(input:string[], strategy:{ [value:string]:number}) {
     return input.map(x => strategy[x]).reduce((a,c) => a + c);
 }
 
-const fileName = path.resolve(__dirname, process.argv[2])
-const input = readFileSync(fileName, 'utf-8').split("\r\n");
 console.log(`Part One: ${total_score(input, part1_strategy)}`);
 console.log(`Part Two: ${total_score(input, part2_strategy)}`);
