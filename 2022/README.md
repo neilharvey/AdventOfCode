@@ -8,7 +8,7 @@
 
 Run `npm install` to install the dev dependencies.
 
-## Initialising a Solution
+## Initialising a solution
 
 Run `npm run init dayN` to initialise a solution for day *N* with a starter solution.ts and example/input files.
 
