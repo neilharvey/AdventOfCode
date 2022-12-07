@@ -18,14 +18,6 @@ class Directory {
         this.size += size;
         this.parent?.addFile(size);
     }
-
-    path(): string {
-        if (this.parent === undefined) {
-            return "";
-        } else {
-            return `${this.parent.path()}/${this.label}`;
-        }
-    }
 }
 
 function change_directory(root: Directory, cwd: Directory, dir: string) {
@@ -69,17 +61,17 @@ function getDirectoryStructure(terminal: string[]) {
     return root;
 }
 
-function flatten(root: Directory) {
+function getDirectorySizes(root: Directory) {
 
     let directorySizes: number[] = []
     directorySizes.push(root.size);
-    root.directories.forEach(x => flatten(x).forEach(value => directorySizes.push(value)));
+    root.directories.forEach(x => getDirectorySizes(x).forEach(value => directorySizes.push(value)));
     return directorySizes;
 }
 
 const terminal = readInput();
 const root = getDirectoryStructure(terminal);
-const directorySizes = flatten(root);
+const directorySizes = getDirectorySizes(root);
 const smallDirectoriesSize = directorySizes.filter(size => size <= 100000).reduce((a, c) => a + c);
 console.log(`Part One: ${smallDirectoriesSize}`);
 
