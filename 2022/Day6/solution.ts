@@ -9,7 +9,7 @@ function find_start_of_packet_marker(packet_size:number) {
         }
     }
 
-    throw new Error("No packet marker found.");
+    return -1; // Not found
 }
 
 console.log(`Part One: ${find_start_of_packet_marker(4)}`);
