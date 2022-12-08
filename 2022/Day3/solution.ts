@@ -1,5 +1,5 @@
-import { readInput } from '../aoc';
-const lines = readInput();
+import { readLines } from '../aoc';
+const lines = readLines();
 
 function get_priority(item:string) {
     const lower_a = 97;

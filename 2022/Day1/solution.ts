@@ -1,5 +1,5 @@
-import { readInput } from '../aoc';
-const lines = readInput();
+import { readLines } from '../aoc';
+const lines = readLines();
 
 let elves: number[] = [];
 let calories_held = 0;

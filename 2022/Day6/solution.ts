@@ -1,5 +1,5 @@
-import { readInput } from '../aoc';
-const buffer = readInput()[0];
+import { readLines } from '../aoc';
+const buffer = readLines()[0];
 
 function find_start_of_packet_marker(packet_size:number) {
     for (let n = packet_size; n < buffer.length; n++) {

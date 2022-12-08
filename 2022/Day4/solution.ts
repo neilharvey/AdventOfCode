@@ -1,5 +1,5 @@
-import { readInput } from '../aoc';
-const input = readInput();
+import { readLines } from '../aoc';
+const input = readLines();
 
 let pairs_contained = 0;
 let pairs_overlapped = 0;

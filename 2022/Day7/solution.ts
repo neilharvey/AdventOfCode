@@ -1,4 +1,4 @@
-import { readInput } from '../aoc';
+import { readLines } from '../aoc';
 
 class Directory {
 
@@ -69,7 +69,7 @@ function getDirectorySizes(root: Directory) {
     return directorySizes;
 }
 
-const terminal = readInput();
+const terminal = readLines();
 const root = getDirectoryStructure(terminal);
 const directorySizes = getDirectorySizes(root);
 const smallDirectoriesSize = directorySizes.filter(size => size <= 100000).reduce((a, c) => a + c);

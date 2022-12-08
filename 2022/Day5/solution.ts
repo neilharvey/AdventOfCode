@@ -1,5 +1,5 @@
-import { readInput } from '../aoc';
-const input = readInput();
+import { readLines } from '../aoc';
+const input = readLines();
 const stack_count = (input[0].length + 1) / 4;
 
 function supply_stacks(input: string[], move_multiple: boolean) {

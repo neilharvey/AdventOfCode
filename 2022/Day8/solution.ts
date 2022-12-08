@@ -1,20 +1,6 @@
-import { readInput } from '../aoc';
+import { readMatrix } from '../aoc';
 
 const directions: [number, number][] = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-
-function readMap() {
-
-    let map: Array<Array<number>> = [];
-    let input = readInput();
-    for (let row = 0; row < input.length; row++) {
-        map.push(new Array<number>());
-        for (let col = 0; col < input.length; col++) {
-            map[row].push(Number(input[row][col]));
-        }
-    }
-
-    return map;
-}
 
 function isVisibleInDirection(map: Array<Array<number>>, position: [number, number], direction: [number, number]) {
 
@@ -98,7 +84,7 @@ function getHighestScenicScore(map: Array<Array<number>>) {
     return best;
 }
 
-const map = readMap();
+const map = readMatrix();
 const visible = getVisibleTrees(map);
 console.log(`Part One: ${visible}`);
 const score = getHighestScenicScore(map);

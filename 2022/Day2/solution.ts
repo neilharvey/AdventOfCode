@@ -1,5 +1,5 @@
-import { readInput } from '../aoc';
-const input = readInput();
+import { readLines } from '../aoc';
+const input = readLines();
 
 const part1_strategy: { [value: string]:number} = {
     'A X':3 + 1,
