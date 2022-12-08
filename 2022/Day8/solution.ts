@@ -76,25 +76,22 @@ function getViewingDistance(map: Array<Array<number>>, position: [number, number
     return distance - 1;
 }
 
-function getScenicScore(map: Array<Array<number>>, position: [number, number]) {
-
-    let viewingDistances: number[] = [];
-    directions.forEach(direction => {
-        let distance = getViewingDistance(map, position, direction);
-        viewingDistances.push(distance);
-    });
-
-    return viewingDistances.reduce((a, c) => a * c, 1);
-}
-
 function getHighestScenicScore(map: Array<Array<number>>) {
-    
+
     let rows = map.length;
     let cols = map[0].length;
     let best = 0;
     for (let row = 1; row < rows - 1; row++) {
         for (let col = 1; col < cols - 1; col++) {
-            best = Math.max(best, getScenicScore(map, [row,col]));
+
+            let viewingDistances: number[] = [];
+            directions.forEach(direction => {
+                let distance = getViewingDistance(map, [row,col], direction);
+                viewingDistances.push(distance);
+            });
+        
+            let score = viewingDistances.reduce((a, c) => a * c, 1);
+            best = Math.max(best, score);
         }
     }
 
