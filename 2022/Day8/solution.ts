@@ -3,6 +3,7 @@ import { readInput } from '../aoc';
 const directions: [number, number][] = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 
 function readMap() {
+
     let map: Array<Array<number>> = [];
     let input = readInput();
     for (let row = 0; row < input.length; row++) {
@@ -19,7 +20,6 @@ function isVisibleInDirection(map: Array<Array<number>>, position: [number, numb
 
     let height = map[position[0]][position[1]];
     let i = 1;
-
     let x = position[0] + direction[0];
     let y = position[1] + direction[1];
 
@@ -57,9 +57,9 @@ function getVisibleTrees(map: Array<Array<number>>) {
 }
 
 function getViewingDistance(map: Array<Array<number>>, position: [number, number], direction: [number, number]) {
+
     let height = map[position[0]][position[1]];
     let distance = 1;
-
     let x = position[0] + direction[0];
     let y = position[1] + direction[1];
 
@@ -77,6 +77,7 @@ function getViewingDistance(map: Array<Array<number>>, position: [number, number
 }
 
 function getScenicScore(map: Array<Array<number>>, position: [number, number]) {
+
     let viewingDistances: number[] = [];
     directions.forEach(direction => {
         let distance = getViewingDistance(map, position, direction);
@@ -87,6 +88,7 @@ function getScenicScore(map: Array<Array<number>>, position: [number, number]) {
 }
 
 function getHighestScenicScore(map: Array<Array<number>>) {
+    
     let rows = map.length;
     let cols = map[0].length;
     let best = 0;
