@@ -4,3 +4,5 @@ bin/
 obj/
 launchSettings.json
 node_modules/
+input.txt
+.idea
