@@ -12,28 +12,29 @@ let parseLine (line: string) =
 
 let list1, list2 =
     File.ReadAllLines(args.[1])
-    |> Array.map parseLine
-    |> Array.unzip
-    |> fun (x, y) -> (Array.sort x, Array.sort y)
+    |> Array.toList
+    |> List.map parseLine
+    |> List.unzip
+    |> fun (x, y) -> (List.sort x, List.sort y)
 
 let totalDistance =
-    Array.zip list1 list2
-    |> Array.map (fun (x, y) -> abs (x - y))
-    |> Array.sum
+    List.zip list1 list2
+    |> List.map (fun (x, y) -> abs (x - y))
+    |> List.sum
 
 printfn $"Total distance: %d{totalDistance}"
 
 let frequencyMap =
     list2
-    |> Array.groupBy id
-    |> Array.fold (fun (acc: Dictionary<int, int>) (key, group) ->
+    |> List.groupBy id
+    |> List.fold (fun (acc: Dictionary<int, int>) (key, group) ->
         acc.[key] <- group.Length
         acc) (Dictionary<int, int>())
         
 let similarityScore =
     list1
-    |> Array.map (fun item -> (item, frequencyMap.GetValueOrDefault(item) ))
-    |> Array.map (fun (x, y) -> x * y)
-    |> Array.sum
+    |> List.map (fun item -> (item, frequencyMap.GetValueOrDefault(item) ))
+    |> List.map (fun (x, y) -> x * y)
+    |> List.sum
     
 printfn $"Similarity score: %A{similarityScore}"
