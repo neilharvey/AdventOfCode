@@ -5,4 +5,5 @@ obj/
 launchSettings.json
 node_modules/
 input.txt
+example.txt
 .idea
