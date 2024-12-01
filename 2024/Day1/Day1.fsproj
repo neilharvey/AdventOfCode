@@ -7,8 +7,6 @@
 
   <ItemGroup>
     <Compile Include="Program.fs" />
-    <Content Include="Example.txt" />
-    <Content Include="Input.txt" />
   </ItemGroup>
 
 </Project>
